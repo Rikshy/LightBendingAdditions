@@ -1,0 +1,80 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            name = "forge"
+            url = "http://files.minecraftforge.net/maven"
+        }
+    }
+    dependencies {
+        classpath "net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT"
+    }
+}
+
+apply plugin: "net.minecraftforge.gradle.forge"
+
+version = "$mod_version.$patch_version"
+group = "de.nerdynet"
+archivesBaseName = "LightBendingAdditions-$mc_version"
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+minecraft {
+    version = "$mc_version-$forge_version"
+    runDir = "run"
+    mappings = "$mcp_version"
+
+    replace 'GRADLE:VERSION', "$mod_version"
+    replace 'required-before:refraction', "required-before:refraction@-$mc_version-$liblib_version"
+
+    replaceIn 'Constants.java'
+}
+
+repositories {
+    mavenCentral()
+    maven { url = "http://maven.bluexin.be/repository/snapshots/" }
+    maven { url = "http://dvs1.progwml6.com/files/maven" }
+    maven { url = "http://maven.tterrag.com/" }
+    maven { url = "http://maven.blamejared.com" }
+    maven { url = 'http://maven.mcmoddev.com' }
+}
+
+dependencies {
+    compile "com.teamwizardry.librarianlib:librarianlib-1.12.2:$liblib_version-SNAPSHOT:deobf"
+
+    deobfCompile "mezz.jei:jei_1.12.2:$jei_version:api"
+    compile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-$ct_version"
+    //compile "com.teamwizardry.refraction:refraction-1.12.2-1.9.0"
+
+    runtime "mezz.jei:jei_1.12.2:$jei_version"
+    compile fileTree(dir: 'libs', include: '*.jar')
+}
+
+processResources {
+    // this will ensure that this task is redone when the versions change.
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+
+    // replace stuff in mcmod.info, nothing else
+    from(sourceSets.main.resources.srcDirs) {
+        include "mcmod.info"
+
+        // replace version and mcversion
+        expand "version": project.version,
+                "mcversion": project.minecraft.version
+    }
+
+    // copy everything else, thats not the mcmod.info
+    from(sourceSets.main.resources.srcDirs) {
+        exclude "mcmod.info"
+    }
+}
+
+idea {
+    module {
+        inheritOutputDirs = false
+        outputDir = compileJava.destinationDir
+        testOutputDir = compileTestJava.destinationDir
+    }
+}
