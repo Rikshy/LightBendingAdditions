@@ -1,0 +1,19 @@
+{
+	"variants": {
+		"facing=north": {
+			"model": "lightbendingadditions:mini_laser"
+		},
+		"facing=south": {
+			"model": "lightbendingadditions:mini_laser",
+			"y": 180
+		},
+		"facing=west": {
+			"model": "lightbendingadditions:mini_laser",
+			"y": 270
+		},
+		"facing=east": {
+			"model": "lightbendingadditions:mini_laser",
+			"y": 90
+		}
+	}
+}
