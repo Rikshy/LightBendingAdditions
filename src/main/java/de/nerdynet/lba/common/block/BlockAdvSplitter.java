@@ -14,6 +14,7 @@ import com.teamwizardry.refraction.init.ModItems;
 import de.nerdynet.lba.client.render.RenderAdvSplitter;
 import de.nerdynet.lba.common.core.EnumSplitterColor;
 import de.nerdynet.lba.common.tile.TileAdvSplitter;
+import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
@@ -55,6 +56,7 @@ public class BlockAdvSplitter extends BlockModContainer implements ILaserTrace, 
 		super("splitter", Material.IRON);
 		setHardness(1F);
 		setSoundType(SoundType.METAL);
+		setTickRandomly(true);
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -146,16 +148,16 @@ public class BlockAdvSplitter extends BlockModContainer implements ILaserTrace, 
 	}
 
 	@Override
-	public void onNeighborChange(IBlockAccess worldIn, BlockPos pos, BlockPos neighbor) {
-		TileAdvSplitter splitter = getTE((World) worldIn, pos);
+	public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
+		TileAdvSplitter splitter = getTE(worldIn, pos);
 		if (splitter == null) return;
 
 		if (splitter.isPowered()) {
-			if (!((World) worldIn).isBlockPowered(pos) || ((World) worldIn).isBlockIndirectlyGettingPowered(pos) == 0) {
+			if (!worldIn.isBlockPowered(pos) || worldIn.isBlockIndirectlyGettingPowered(pos) == 0) {
 				splitter.setPowered(false);
 			}
 		} else {
-			if (((World) worldIn).isBlockPowered(pos) || ((World) worldIn).isBlockIndirectlyGettingPowered(pos) > 0)
+			if (worldIn.isBlockPowered(pos) || worldIn.isBlockIndirectlyGettingPowered(pos) > 0)
 				splitter.setPowered(true);
 		}
 	}
