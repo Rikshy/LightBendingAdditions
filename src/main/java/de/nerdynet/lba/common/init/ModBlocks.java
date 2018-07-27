@@ -1,5 +1,6 @@
 package de.nerdynet.lba.common.init;
 
+import de.nerdynet.lba.ConfigValues;
 import de.nerdynet.lba.common.block.BlockAdvSplitter;
 import de.nerdynet.lba.common.block.BlockRedstoneMiniLaser;
 import net.minecraftforge.fml.relauncher.Side;
@@ -11,12 +12,12 @@ public class ModBlocks {
 	public static BlockAdvSplitter ADVSPLITTER;
 
 	public static void init() {
-		ADVSPLITTER = new BlockAdvSplitter();
-		REDMINILASER = new BlockRedstoneMiniLaser();
+		if(ConfigValues.ENABLE_ADV_SPLITTER) ADVSPLITTER = new BlockAdvSplitter();
+		if(ConfigValues.ENABLE_MINI_RED_LASER) REDMINILASER = new BlockRedstoneMiniLaser();
 	}
 
 	@SideOnly(Side.CLIENT)
 	public static void initModels() {
-		ADVSPLITTER.initModel();;
+		if(ConfigValues.ENABLE_ADV_SPLITTER) ADVSPLITTER.initModel();
 	}
 }

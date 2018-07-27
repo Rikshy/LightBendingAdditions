@@ -2,6 +2,7 @@ package de.nerdynet.lba.common;
 
 import de.nerdynet.lba.common.init.ModBlocks;
 import de.nerdynet.lba.common.init.ModEffects;
+import de.nerdynet.lba.common.init.ModRecipes;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -15,6 +16,7 @@ public class CommonProxy {
 	}
 
 	public void init(FMLInitializationEvent event) {
+		ModRecipes.init();
 	}
 
 	public void postInit(FMLPostInitializationEvent event) {

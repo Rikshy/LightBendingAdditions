@@ -25,7 +25,7 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
 
 	@Override
 	public void onResourceManagerReload(IResourceManager resourceManager) {
-		MinecraftForge.EVENT_BUS.post(new com.teamwizardry.refraction.client.proxy.ClientProxy.ResourceReloadEvent(resourceManager));
+		MinecraftForge.EVENT_BUS.post(new ResourceReloadEvent(resourceManager));
 	}
 
 	public static class ResourceReloadEvent extends Event {
